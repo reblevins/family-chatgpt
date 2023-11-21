@@ -28,22 +28,29 @@
 </template>
 
 <script setup>
-import { onMounted, toRefs } from 'vue'
+import { onMounted, toRefs, computed } from 'vue'
+import { useAuth0 } from '@auth0/auth0-vue';
+
 import { useUsersStore } from '@/stores/users'
 import { useChatsStore } from '@/stores/chats'
 
+const { isAuthenticated, isLoading } = useAuth0()
 import NavBar from '@/components/NavBar.vue'
 import NavDrawer from '@/components/NavDrawer.vue'
 import CurrentChat from '@/components/CurrentChat.vue'
 
 const usersStore = useUsersStore()
-const { accessToken, auth0UserId, loginRequired } = toRefs(usersStore)
+const { accessToken, auth0UserId } = toRefs(usersStore)
 const chatsStore = useChatsStore()
 
 usersStore.$subscribe((mutation, state) => {
-  if (mutation.events.key === 'auth0UserId' && auth0UserId.value) {
+  if (state.accessToken && state.auth0UserId) {
     chatsStore.fetchAllChats(auth0UserId.value, accessToken.value)
   }
+})
+
+const loginRequired = computed(() => {
+  return !isAuthenticated.value && !isLoading.value
 })
 
 onMounted(async() => {

@@ -1,6 +1,6 @@
 import { useAuth0 } from '@auth0/auth0-vue';
 
-// const { /*isAuthenticated, isLoading, user, loginWithRedirect, logout, */loginWithRedirect, getAccessTokenSilently } = useAuth0()
+// const { /*loginWithRedirect, logout, */isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0()
 
 async function initAuth() {
   const { getAccessTokenSilently, loginWithRedirect } = useAuth0()
@@ -28,10 +28,5 @@ async function loginWithRedirect() {
   
 export default {
   initAuth,
-  // user,
   loginWithRedirect,
-  // logout,
-  // getAccessTokenSilently,
-  // isAuthenticated,
-  // isLoading,
 }

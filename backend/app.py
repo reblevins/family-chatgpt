@@ -2,7 +2,7 @@ import json
 import base64
 from urllib.request import urlopen
 
-from flask import Flask, request, jsonify, _request_ctx_stack
+from flask import Flask, request, jsonify
 from flask_migrate import Migrate
 from flask_cors import CORS, cross_origin
 from jose import jwt
@@ -55,6 +55,12 @@ def handle_auth_error(ex):
     response = jsonify(ex.error)
     response.status_code = ex.status_code
     return response
+
+
+@app.route("/", methods=["GET"])
+@cross_origin(headers=["Content-Type", "Authorization"])
+def index():
+    return jsonify({"message": "Hello World"})
 
 
 @app.route("/users/<string:user_id>/chats", methods=["GET"])

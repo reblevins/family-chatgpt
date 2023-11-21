@@ -1,6 +1,6 @@
 <template>
   <v-app-bar title="ChatGPT" :elevation="1">
-    <v-btn v-if="!isAuthenticated" @click="usersStore.loginWithRedirect">
+    <v-btn v-if="!isAuthenticated" @click="loginWithRedirect">
       Login
     </v-btn>
 
@@ -34,11 +34,9 @@
 </template>
 
 <script setup>
-import { toRefs } from 'vue'
-import { useUsersStore } from '@/stores/users'
+import { useAuth0 } from '@auth0/auth0-vue';
 
-const usersStore = useUsersStore()
-const { user, isAuthenticated, isLoading, loginWithRedirect, logout } = toRefs(usersStore)
+const { loginWithRedirect, logout, isAuthenticated, isLoading } = useAuth0()
 </script>
 
 <style lang="scss" scoped>

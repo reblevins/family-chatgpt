@@ -25,7 +25,7 @@ async function fetchAllChats(userId, accessToken) {
   const config = {
     headers: { Authorization: `Bearer ${accessToken}` },
   }
-  const response = await axios.get(`http://127.0.0.1:5000/users/${userId}/chats`, config)
+  const response = await axios.get(`/api/users/${userId}/chats`, config)
   this.chats = response.data.chats
   if (this.chats.length > 0) {
     this.currentChatIndex = 0
@@ -67,7 +67,7 @@ async function createChat(newMessage) {
   this.currentChat.messages.push({ role: 'user', content: newMessage })
 
   const response = await axios.put(
-    `http://127.0.0.1:5000/users/${auth0UserId}/chats`,
+    `/api/users/${auth0UserId}/chats`,
     formData,
     config
   )
@@ -82,7 +82,7 @@ async function sendMessage(newMessage) {
   const { formData, config } = await createFormData(newMessage)
 
   const response = await axios.post(
-    `http://127.0.0.1:5000/chats/${this.currentChat.id}/messages`,
+    `/api/chats/${this.currentChat.id}/messages`,
     formData,
     config
   )

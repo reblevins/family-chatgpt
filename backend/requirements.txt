@@ -1,3 +1,4 @@
+cffi
 flask
 python-dotenv
 python-jose
