@@ -4,4 +4,4 @@ build:
     frontend: frontend/Dockerfile
 run:
   backend: flask run --host=0.0.0.0 --port=5001
-  frotnend: nginix -g daemon off;
+  frontend: nginix -g daemon off;
