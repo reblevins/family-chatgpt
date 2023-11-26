@@ -30,6 +30,7 @@
 <script setup>
 import { onMounted, toRefs, computed } from 'vue'
 import { useAuth0 } from '@auth0/auth0-vue';
+import axios from 'axios';
 
 import { useUsersStore } from '@/stores/users'
 import { useChatsStore } from '@/stores/chats'
@@ -55,6 +56,14 @@ const loginRequired = computed(() => {
 
 onMounted(async() => {
   await usersStore.initAuth()
+
+  axios.get('/')
+    .then((response) => {
+      console.log(response.data)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
 })
 </script>
 
