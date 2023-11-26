@@ -252,3 +252,7 @@ def post_to_chat(chat_id):
         return jsonify({"chat": chat.to_dict()})
     else:
         return jsonify({"error": "Chat not found"}), 404
+
+
+if __name__ == "__main__":
+    app.run()
