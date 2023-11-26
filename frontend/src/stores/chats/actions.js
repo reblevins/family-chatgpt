@@ -1,5 +1,8 @@
-import { computed } from 'vue'
 import axios from 'axios'
+
+axios.defaults.baseURL = import.meta.env.VITE_API
+
+console.log(import.meta.env)
 
 import { useUsersStore } from '@/stores/users'
 
@@ -25,7 +28,7 @@ async function fetchAllChats(userId, accessToken) {
   const config = {
     headers: { Authorization: `Bearer ${accessToken}` },
   }
-  const response = await axios.get(`/api/users/${userId}/chats`, config)
+  const response = await axios.get(`/users/${userId}/chats`, config)
   this.chats = response.data.chats
   if (this.chats.length > 0) {
     this.currentChatIndex = 0
@@ -67,7 +70,7 @@ async function createChat(newMessage) {
   this.currentChat.messages.push({ role: 'user', content: newMessage })
 
   const response = await axios.put(
-    `/api/users/${auth0UserId}/chats`,
+    `/users/${auth0UserId}/chats`,
     formData,
     config
   )
@@ -82,7 +85,7 @@ async function sendMessage(newMessage) {
   const { formData, config } = await createFormData(newMessage)
 
   const response = await axios.post(
-    `/api/chats/${this.currentChat.id}/messages`,
+    `/chats/${this.currentChat.id}/messages`,
     formData,
     config
   )
