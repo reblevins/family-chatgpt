@@ -13,8 +13,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the content of the local src directory to the working directory
 COPY . .
 
-# Specify the port the app runs on
-EXPOSE 5001
-
 # Command to run the application
-CMD ["flask", "run", "--host=0.0.0.0", "--port=5001"]
+CMD gunicorn --bind 0.0.0.0:$PORT wsgi:app
