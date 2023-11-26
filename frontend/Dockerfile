@@ -26,7 +26,7 @@ RUN rm -rf /usr/share/nginx/html/*
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 
 # Copy the custom nginx config
-COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
+COPY ./nginx/nginx.conf.template /etc/nginx/templates/default.conf.template
 
 # Expose the port (Heroku will dynamically assign a port)
 EXPOSE $PORT
