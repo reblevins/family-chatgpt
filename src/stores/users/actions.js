@@ -23,7 +23,11 @@ async function initAuth() {
 async function loginWithRedirect() {
 // const { loginWithRedirect } = useAuth0()
 // console.log(useAuth0())
-  this.loginWithRedirect()
+  this.loginWithRedirect({
+    authorizationParams: {
+      redirect_uri: import.meta.env.VITE_REDIRECT_URI,
+    }
+  })
 }
   
 export default {
