@@ -1,8 +1,9 @@
 <template>
   <v-app>
-    <NavBar />
 
-    <NavDrawer />
+    <NavBar :drawer="drawer" @update:drawer="updateDrawer" />
+
+    <NavDrawer :drawer="drawer" @update:drawer="updateDrawer" />
 
     <v-main class="h-screen overflow-hidden">
       <CurrentChat />
@@ -28,7 +29,7 @@
 </template>
 
 <script setup>
-import { onMounted, toRefs, computed } from 'vue'
+import { onMounted, ref, toRefs, computed } from 'vue'
 import { useAuth0 } from '@auth0/auth0-vue';
 import axios from 'axios';
 
@@ -44,6 +45,8 @@ const usersStore = useUsersStore()
 const { accessToken, auth0UserId } = toRefs(usersStore)
 const chatsStore = useChatsStore()
 
+const drawer = ref(null)
+
 usersStore.$subscribe((mutation, state) => {
   if (state.accessToken && state.auth0UserId) {
     chatsStore.fetchAllChats(auth0UserId.value, accessToken.value)
@@ -53,6 +56,11 @@ usersStore.$subscribe((mutation, state) => {
 const loginRequired = computed(() => {
   return !isAuthenticated.value && !isLoading.value
 })
+
+function updateDrawer(value) {
+  console.log('updateDrawer', value)
+  drawer.value = value
+}
 
 onMounted(async() => {
   await usersStore.initAuth()
