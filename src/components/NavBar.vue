@@ -26,7 +26,7 @@
           link
           @click="logout({
             logoutParams: {
-              returnTo: 'http://localhost:5173'
+              returnTo: returnTo,
             }
           })"
         >
@@ -38,7 +38,7 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits, computed, toRefs } from 'vue'
+import { computed, toRefs } from 'vue'
 import { useAuth0 } from '@auth0/auth0-vue';
 
 import { useUsersStore } from '@/stores/users'
@@ -54,6 +54,8 @@ const emit = defineEmits(['update:drawer'])
 
 const { loginWithRedirect, logout, isAuthenticated, isLoading } = useAuth0()
 
+console.log(document.location.origin)
+
 const drawer = computed({
   get() {
     return props.drawer
@@ -62,6 +64,10 @@ const drawer = computed({
     console.log('drawer', value)
     emit('update:drawer', value)
   },
+})
+
+const returnTo = computed(() => {
+  return document.location.origin
 })
 </script>
 
