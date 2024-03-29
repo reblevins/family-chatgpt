@@ -52,3 +52,15 @@ npm run test:e2e -- tests/example.spec.ts
 # Runs the tests in debug mode
 npm run test:e2e -- --debug
 ```
+
+### Deploy to Heroku
+
+```
+docker build --platform linux/amd64 -t family-chatgpt-frontend .
+docker tag family-chatgpt-frontend registry.heroku.com/family-chatgpt-frontend/web
+heroku container:login
+docker push registry.heroku.com/family-chatgpt-frontend/web
+heroku container:release web --app family-chatgpt-frontend
+
+heroku logs --tail --app family-chatgpt-frontend
+```
